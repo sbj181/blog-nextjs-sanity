@@ -1,14 +1,13 @@
-// import IndexPage from 'components/IndexPage'
+import IndexPage from 'components/IndexPage'
 import PreviewIndexPage from 'components/PreviewIndexPage'
 import { readToken } from 'lib/sanity.api'
 import { getAllPosts, getClient, getSettings } from 'lib/sanity.client'
 import { Post, Settings } from 'lib/sanity.queries'
 import { GetStaticProps } from 'next'
 import type { SharedPageProps } from 'pages/_app'
-import HomePage from 'components/HomePage'
 
 interface PageProps extends SharedPageProps {
-//   posts: Post[]
+  posts: Post[]
   settings: Settings
 }
 
@@ -17,27 +16,14 @@ interface Query {
 }
 
 export default function Page(props: PageProps) {
-  const { settings, draftMode } = props;
+  const { posts, settings, draftMode } = props
 
   if (draftMode) {
-    // Assume posts is an empty array if in draft mode
-    const posts: Post[] = [];
-    return (
-      <>
-        
-        <PreviewIndexPage posts={posts} settings={settings} />
-      </>
-    );
+    return <PreviewIndexPage posts={posts} settings={settings} />
   }
 
-  return (
-    <>
-      
-      <HomePage settings={settings} />
-    </>
-  );
+  return <IndexPage posts={posts} settings={settings} />
 }
-
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
   const { draftMode = false } = ctx
@@ -50,7 +36,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
 
   return {
     props: {
-    //   posts,
+      posts,
       settings,
       draftMode,
       token: draftMode ? readToken : '',

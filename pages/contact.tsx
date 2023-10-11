@@ -5,7 +5,7 @@ import { getAllPosts, getClient, getSettings } from 'lib/sanity.client'
 import { Post, Settings } from 'lib/sanity.queries'
 import { GetStaticProps } from 'next'
 import type { SharedPageProps } from 'pages/_app'
-import HomePage from 'components/HomePage'
+import ContactPage from 'components/ContactPage'
 
 interface PageProps extends SharedPageProps {
 //   posts: Post[]
@@ -33,7 +33,7 @@ export default function Page(props: PageProps) {
   return (
     <>
       
-      <HomePage settings={settings} />
+      <ContactPage settings={settings} />
     </>
   );
 }
